@@ -41,6 +41,10 @@ const Button = styled.button`
         background-color: #497cf6;
     }
 `
+const axiosInstance  = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
+
 
 const Comments = ({ videoId }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -51,7 +55,7 @@ const Comments = ({ videoId }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await axios.get(`/comments/${videoId}`);
+        const res = await axiosInstance.get(`/comments/${videoId}`);
         setComments(res.data);
       } catch (err) {}
     };
@@ -66,7 +70,7 @@ const Comments = ({ videoId }) => {
     }
 
     try {
-      const res = await axios.post('/comments/', { desc: inputValue, videoId });
+      const res = await axiosInstance.post('/comments/', { desc: inputValue, videoId });
 
       // Update local comments state
       setComments((prevComments) => [res.data, ...prevComments]);

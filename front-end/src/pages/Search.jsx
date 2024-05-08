@@ -9,14 +9,16 @@ const Container = styled.div`
     flex-wrap: wrap;
     gap: 10px;
 `
-
+const axiosInstance  = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+});
 export const Search = () => {
     const[videos, setVideos] = useState([])
     const query = useLocation().search
 
     useEffect(()=> {
         const fetchVideos = async ()=> {
-            const res = await axios.get(`videos/search${query}`);
+            const res = await axiosInstance.get(`videos/search${query}`);
             setVideos(res.data);
         }
         fetchVideos();

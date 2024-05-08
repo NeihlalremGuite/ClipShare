@@ -9,6 +9,9 @@ const Container = styled.div`
     flex-wrap: wrap;
 
 `
+const axiosInstance  = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+});
 
 const Home = ({type}) => {
 
@@ -16,7 +19,7 @@ const Home = ({type}) => {
 
     useEffect(() => {
         const fetchVideos = async () => {
-            const res = await axios.get(`/videos/${type}`);
+            const res = await axiosInstance.get(`/videos/${type}`);
             setVideos(res.data);
         }
         fetchVideos();

@@ -62,6 +62,10 @@ const Text = styled.span`
   text-align: left;
 `;
 
+const axiosInstance  = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
+
 const Comment = ({ comment}) => {
   const [deleted, setDeleted] = useState(false);
   const [channel, setChannel] = useState({});
@@ -70,7 +74,7 @@ const Comment = ({ comment}) => {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get(`/users/find/${comment.userId}`);
+        const res = await axiosInstance.get(`/users/find/${comment.userId}`);
         setChannel(res.data);
       } catch (err) {
         console.error('Error fetching channel:', err);
@@ -81,7 +85,7 @@ const Comment = ({ comment}) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/comments/${comment._id}`);
+      await axiosInstance.delete(`/comments/${comment._id}`);
       dispatch(deleteComment(comment._id));
       setDeleted(true);
     } catch (err) {

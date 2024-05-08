@@ -64,7 +64,9 @@ const Links = styled.div`
   margin-left: 50px;
 `;
 
-
+const axiosInstance  = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
 
 const SignIn = () => {
     const [name, setName] = useState("");
@@ -76,7 +78,7 @@ const SignIn = () => {
         e.preventDefault();
         dispatch(loginStart());
         try {
-          const res = await axios.post("/auth/signin", { name, password });
+          const res = await axiosInstance.post("/auth/signin", { name, password });
           dispatch(loginSuccess(res.data));
         } catch (err) {
           dispatch(loginFailure());
@@ -87,7 +89,7 @@ const SignIn = () => {
         dispatch(loginStart())
         signInWithPopup(auth, provider)
             .then((result) => {
-                axios.post("/auth/google", {
+              axiosInstance.post("/auth/google", {
                     name:result.user.displayName,
                     email: result.user.email,
                     img: result.user.photoURL,
@@ -104,7 +106,7 @@ const SignIn = () => {
       e.preventDefault();
       dispatch(loginStart());
       try {
-        const res = await axios.post("/auth/signup", { name, email, password });
+        const res = await axiosInstance.post("/auth/signup", { name, email, password });
         dispatch(loginSuccess(res.data));
       } catch (err) {
         dispatch(loginFailure());

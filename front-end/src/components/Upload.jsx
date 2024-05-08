@@ -126,6 +126,10 @@ export const Upload = ({setOpen}) => {
         ) 
     };
 
+    const axiosInstance  = axios.create({
+        baseURL: process.env.REACT_APP_API_URL,
+      });
+
     useEffect(()=> {
         video && uploadFile(video, "videoUrl");
     }, [video]);
@@ -135,7 +139,7 @@ export const Upload = ({setOpen}) => {
 
     const handleUpload = async (e) => {
         e.preventDefault();
-        const res = await axios.post("/videos", {...inputs, tags})
+        const res = await axiosInstance.post("/videos", {...inputs, tags})
         setOpen(false)
         res.status===200 &&  navigate (`/video/${res.data._id}`)
     }

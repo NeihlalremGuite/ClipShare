@@ -57,18 +57,22 @@ const Info = styled.div`
   color: ${({ theme }) => theme.textSoft};
 `;
 
+const axiosInstance  = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
+
 const Card = ({ type, video }) => {
 
   const dispatch = useDispatch();
   const increaseCount = async () =>{
-    await axios.put(`/videos/view/${video._id}`)
+    await axiosInstance.put(`/videos/view/${video._id}`)
     dispatch(view(video._id))
 }
   const [channel, setChannel] = useState({});
 
   useEffect(() => {
     const fetchChannel = async () => {
-      const res = await axios.get(`/users/find/${video.userId}`);
+      const res = await axiosInstance.get(`/users/find/${video.userId}`);
       setChannel(res.data);
     };
     fetchChannel();
