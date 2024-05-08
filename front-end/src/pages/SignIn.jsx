@@ -117,7 +117,7 @@ const SignIn = () => {
         <Container>
             <Wrapper>
                 <Title>Sign in</Title>
-                <SubTitle>to continue to RemaTube</SubTitle>
+                <SubTitle>to continue to ClipShare</SubTitle>
                 <Input
                   placeholder="username"
                   onChange={(e) => setName(e.target.value)}
